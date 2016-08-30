@@ -12,9 +12,17 @@
         android:supportsRtl="true"
         android:name=".extra.MyApplication"
         android:theme="@style/AppTheme">
+
+        <supports-screens
+            android:smallScreens="true"
+            android:normalScreens="true"
+            android:largeScreens="true"
+            android:xlargeScreens="false"
+            android:anyDensity="true" />
+
         <activity
             android:name=".activitys.NewMemberActivity"
-            android:windowSoftInputMode="adjustPan"
+            android:windowSoftInputMode="adjustResize|adjustPan"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

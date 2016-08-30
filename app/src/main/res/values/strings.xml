@@ -5,7 +5,7 @@
     <string name="err_msg_first_name">Enter First Name</string>
     <string name="err_msg_address">Enter Address</string>
     <string name="err_msg_number">Enter Phone Number</string>
-    <string name="err_msg_valid_number">Enter 10 degits only</string>
+    <string name="err_msg_valid_number">Enter 12 degits only</string>
     <string name="err_msg_email">Enter Email Address</string>
 
 </resources>

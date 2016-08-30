@@ -2,6 +2,8 @@ package in.vaksys.storemanager.activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -81,10 +83,11 @@ public class NewMemberActivity extends AppCompatActivity implements View.OnClick
     private String user_fname, user_gender, user_adddress, user_phone, user_email;
 
 
-    private ArrayList<String> day, month, year, state,city;
+    private ArrayList<String> day, month, year, state, city;
     private ArrayList<findus> sourc;
 
     private MyApplication myApplication;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,11 +155,13 @@ public class NewMemberActivity extends AppCompatActivity implements View.OnClick
 
         city = new ArrayList<>();
 
+        city.add("Select City");
         city.add("Mehsana");
         city.add("Gandhinagar");
         city.add("Ahmedabad");
 
         state = new ArrayList<>();
+        state.add("Select State");
         state.add("Gujarat");
         state.add("Panjab");
 
@@ -180,7 +185,6 @@ public class NewMemberActivity extends AppCompatActivity implements View.OnClick
         SpinnerTextAdapterstatic spinnerTextAdapterstate = new SpinnerTextAdapterstatic(NewMemberActivity.this, state);
         // attaching data adapter to spinner
         spState.setAdapter(spinnerTextAdapterstate);
-
 
 
     }
@@ -255,6 +259,8 @@ public class NewMemberActivity extends AppCompatActivity implements View.OnClick
 
                     } else {
                         myApplication.hideDialog();
+
+
                         Toast.makeText(NewMemberActivity.this, "Something wrong", Toast.LENGTH_SHORT).show();
                     }
 
@@ -264,6 +270,8 @@ public class NewMemberActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onFailure(Call<FindAs> call, Throwable t) {
                 myApplication.hideDialog();
+
+
                 Toast.makeText(NewMemberActivity.this, "No Internet Access", Toast.LENGTH_SHORT).show();
 
             }
@@ -304,8 +312,9 @@ public class NewMemberActivity extends AppCompatActivity implements View.OnClick
         preferenceHelper.SaveStringPref(AppConfig.PREF_USER_EMAIL, user_email);
         preferenceHelper.ApplyPref();
 
-        Intent i = new Intent(NewMemberActivity.this, Use_Ailments_Activity.class);
+        Intent i = new Intent(NewMemberActivity.this, Ailments_Activity.class);
         startActivity(i);
+        finish();
 
     }
 
@@ -337,7 +346,7 @@ public class NewMemberActivity extends AppCompatActivity implements View.OnClick
             requestFocus(edtMobileUser);
             return false;
         }
-        if (edtMobileUser.length() != 10) {
+        if (edtMobileUser.length() != 12) {
             edtMobileUser.setError(getString(R.string.err_msg_valid_number));
             requestFocus(edtMobileUser);
             return false;

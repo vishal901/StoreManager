@@ -139,57 +139,57 @@ public class Ailments_Adapter extends RecyclerView.Adapter<Ailments_Adapter.View
 
     }
 
-    private void customer_detail_call(String user_fname, String user_phone, String user_gender, String user_email, String user_adddress, String user_ailment_key) {
-
-        myApplication.DialogMessage("Loading...");
-        myApplication.showDialog();
-
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<RegisterResponse> responseCall = apiInterface.REGISTER_RESPONSE_CALL("1", user_fname, user_gender, user_adddress, user_phone, user_email, user_ailment_key);
-
-        responseCall.enqueue(new Callback<RegisterResponse>() {
-            @Override
-            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
-
-                if (response.code() == 200) {
-
-                    myApplication.hideDialog();
-
-                    if (!response.body().isError()) {
-
-                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
-                        preferenceHelper.initPref();
-                        preferenceHelper.SaveStringPref(AppConfig.PREF_CUSTOMER_ID, response.body().getCustomerId());
-                        preferenceHelper.ApplyPref();
-
-                        Intent intent = new Intent(context, Pain_Activity.class);
-                        context.startActivity(intent);
-
-
-                    } else {
-
-                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-
-
-                    }
-                } else {
-                    myApplication.hideDialog();
-                    Toast.makeText(context, "something worng", Toast.LENGTH_SHORT).show();
-
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<RegisterResponse> call, Throwable t) {
-                myApplication.hideDialog();
-                Toast.makeText(context, "No Internet Access", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-    }
+//    private void customer_detail_call(String user_fname, String user_phone, String user_gender, String user_email, String user_adddress, String user_ailment_key) {
+//
+//        myApplication.DialogMessage("Loading...");
+//        myApplication.showDialog();
+//
+//        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+//        Call<RegisterResponse> responseCall = apiInterface.REGISTER_RESPONSE_CALL("1", user_fname, user_gender, user_adddress, user_phone, user_email, user_ailment_key);
+//
+//        responseCall.enqueue(new Callback<RegisterResponse>() {
+//            @Override
+//            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+//
+//                if (response.code() == 200) {
+//
+//                    myApplication.hideDialog();
+//
+//                    if (!response.body().isError()) {
+//
+//                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+//
+//                        preferenceHelper.initPref();
+//                        preferenceHelper.SaveStringPref(AppConfig.PREF_CUSTOMER_ID, response.body().getCustomerId());
+//                        preferenceHelper.ApplyPref();
+//
+//                        Intent intent = new Intent(context, Pain_Activity.class);
+//                        context.startActivity(intent);
+//
+//
+//                    } else {
+//
+//                        Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+//
+//
+//                    }
+//                } else {
+//                    myApplication.hideDialog();
+//                    Toast.makeText(context, "something worng", Toast.LENGTH_SHORT).show();
+//
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<RegisterResponse> call, Throwable t) {
+//                myApplication.hideDialog();
+//                Toast.makeText(context, "No Internet Access", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
+//
+//    }
 
 }

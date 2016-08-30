@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.stetho.Stetho;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +70,7 @@ public class Ailments_Activity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_ailments);
         ButterKnife.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
+        Stetho.initializeWithDefaults(this);
         myApplication = MyApplication.getInstance();
         myApplication.createDialog(Ailments_Activity.this, false);
 
@@ -90,6 +93,8 @@ public class Ailments_Activity extends AppCompatActivity implements View.OnClick
         user_adddress = preferenceHelper.LoadStringPref(AppConfig.PREF_USER_ADDRESS, "");
 
         btnSubmitAliment.setOnClickListener(this);
+
+        recAliments.addItemDecoration(new DividerItemDecoration(Ailments_Activity.this));
         recAliments = (RecyclerView) findViewById(R.id.rec_aliments);
         recAliments.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Ailments_Activity.this);
@@ -231,6 +236,35 @@ public class Ailments_Activity extends AppCompatActivity implements View.OnClick
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(Ailments_Activity.this, NewMemberActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        switch (item.getItemId()) {
+            case R.id.home:
+
+                Intent intent = new Intent(Ailments_Activity.this, NewMemberActivity.class);
+                startActivity(intent);
+                finish();
+
+                break;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onClick(View v) {
 
 
@@ -243,15 +277,14 @@ public class Ailments_Activity extends AppCompatActivity implements View.OnClick
 
         ApiClient.showLog("data all selected", txtHide.getText().toString());
 
-        if (txtHide.getText().toString().equalsIgnoreCase("")){
+        if (txtHide.getText().toString().equalsIgnoreCase("")) {
 
             Toast.makeText(Ailments_Activity.this, "Please Select One Ailment On List", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
 
             customer_detail_call(user_fname, user_phone, user_gender, user_email, user_adddress, txtHide.getText().toString());
 
         }
-
 
 
     }
@@ -268,6 +301,8 @@ public class Ailments_Activity extends AppCompatActivity implements View.OnClick
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
 
+                ApiClient.showLog("code",""+response.code());
+
                 if (response.code() == 200) {
 
                     myApplication.hideDialog();
@@ -280,8 +315,10 @@ public class Ailments_Activity extends AppCompatActivity implements View.OnClick
                         preferenceHelper.SaveStringPref(AppConfig.PREF_CUSTOMER_ID, response.body().getCustomerId());
                         preferenceHelper.ApplyPref();
 
+                        myApplication.hideDialog();
                         Intent intent = new Intent(Ailments_Activity.this, Pain_Activity.class);
-                       startActivity(intent);
+                        startActivity(intent);
+                        finish();
 
 
                     } else {

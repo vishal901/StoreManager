@@ -459,11 +459,29 @@ public class Pain_Activity extends AppCompatActivity implements View.OnClickList
 
                 break;
 
+            case R.id.home:
+                Intent intent = new Intent(Pain_Activity.this, Ailments_Activity.class);
+                startActivity(intent);
+                finish();
+                break;
+
 
             default:
                 return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(Pain_Activity.this, Ailments_Activity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
+
 }
 

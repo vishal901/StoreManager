@@ -58,14 +58,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="horizontal"
         android:padding="10dp">
 
         <TextView
             android:id="@+id/txt_fornt_image"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="35dp"
+            android:layout_weight="1"
             android:layout_marginRight="10dp"
             android:background="@drawable/btn_ractangle_border1"
             android:gravity="center"
@@ -77,9 +77,11 @@
 
         <TextView
             android:id="@+id/txt_back_image"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="35dp"
             android:layout_marginLeft="10dp"
+            android:enabled="false"
             android:background="@drawable/btn_ractangle_border1"
             android:gravity="center"
             android:text="BACK"
@@ -89,8 +91,9 @@
 
         <TextView
             android:id="@+id/btn_save_image_pain"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="35dp"
+            android:layout_weight="1.5"
             android:layout_marginLeft="10dp"
             android:background="@drawable/btn_ractangle_border1"
             android:gravity="center"
@@ -110,7 +113,7 @@
         <Button
             android:id="@+id/btn_save_pain"
             style="@style/btnbeckground"
-            android:layout_width="100dp"
+            android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_marginRight="10dp"
             android:text="Submit" />

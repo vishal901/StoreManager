@@ -20,15 +20,20 @@
             android:xlargeScreens="false"
             android:anyDensity="true" />
 
-        <activity
-            android:name=".activitys.NewMemberActivity"
-            android:windowSoftInputMode="adjustResize|adjustPan"
+        <activity android:name=".activitys.Branch_Activity"
+
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activitys.NewMemberActivity"
+            android:windowSoftInputMode="adjustResize|adjustPan"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity

@@ -94,6 +94,7 @@ public class Pain_Activity extends AppCompatActivity implements View.OnClickList
     private String FrontImage = "";
     private String BackImage = "";
     private String screentype = "FRONT";
+    private String barnch_id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,6 +120,8 @@ public class Pain_Activity extends AppCompatActivity implements View.OnClickList
         PreferenceHelper preferenceHelper = new PreferenceHelper(this, "login");
         customer_id = preferenceHelper.LoadStringPref(AppConfig.PREF_CUSTOMER_ID, "");
 
+
+        txtbackimage.setBackgroundColor(Color.GRAY);
 
         ApiClient.showLog("customer id", customer_id);
 
@@ -228,12 +231,20 @@ public class Pain_Activity extends AppCompatActivity implements View.OnClickList
                     ApiClient.showLog("code1", "" + response.code());
 
                     if (response.code() == 200) {
-                        myApplication.hideDialog();
-                        txtfrontimage.setEnabled(false);
+
                         if (!response.body().isError()) {
+
+                            myApplication.hideDialog();
+                            txtfrontimage.setEnabled(false);
+                            txtbackimage.setEnabled(true);
+
+
                             Toast.makeText(Pain_Activity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
                             txtfrontimage.setBackgroundColor(Color.GRAY);
+                            txtbackimage.setBackground(getResources().getDrawable(R.drawable.btn_ractangle_border1));
+
+
 
                             try {
                                 System.out.println(add_file_path.get(1));
@@ -244,7 +255,7 @@ public class Pain_Activity extends AppCompatActivity implements View.OnClickList
                                 myApplication.hideDialog();
                             }
                         } else {
-
+                            txtfrontimage.setEnabled(true);
                             Toast.makeText(Pain_Activity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                         }
 
@@ -269,7 +280,8 @@ public class Pain_Activity extends AppCompatActivity implements View.OnClickList
 
             e.printStackTrace();
             myApplication.hideDialog();
-            secondcall(add_file_path.get(1), stringHashMap);
+
+            Toast.makeText(Pain_Activity.this, "Please Save Image After Submit", Toast.LENGTH_SHORT).show();
 
         }
 
@@ -459,7 +471,7 @@ public class Pain_Activity extends AppCompatActivity implements View.OnClickList
 
                 break;
 
-            case R.id.home:
+            case android.R.id.home:
                 Intent intent = new Intent(Pain_Activity.this, Ailments_Activity.class);
                 startActivity(intent);
                 finish();

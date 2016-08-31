@@ -39,6 +39,7 @@ import in.vaksys.storemanager.response.RegisterResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Field;
 
 /**
  * Created by lenovoi3 on 7/22/2016.
@@ -60,8 +61,9 @@ public class Ailments_Activity extends AppCompatActivity implements View.OnClick
     private List<ailment> ailmentList;
     private Ailments_Adapter adapter;
     private PreferenceHelper preferenceHelper;
-    private String user_fname, user_gender, user_adddress, user_phone, user_email, user_ailment_key;
+    private String user_fname, user_gender, user_adddress, user_phone, user_email, st_findustitle, st_lastname, user_ailment_key, st_address2, user_dob, user_city, user_state, st_zip, st_landline, st_findus_word;
     MyApplication myApplication;
+    private String barnch_id;
 
 
     @Override
@@ -91,6 +93,19 @@ public class Ailments_Activity extends AppCompatActivity implements View.OnClick
         user_email = preferenceHelper.LoadStringPref(AppConfig.PREF_USER_EMAIL, "");
         user_gender = preferenceHelper.LoadStringPref(AppConfig.PREF_USER_GENDER, "");
         user_adddress = preferenceHelper.LoadStringPref(AppConfig.PREF_USER_ADDRESS, "");
+        barnch_id = preferenceHelper.LoadStringPref(AppConfig.PREF_BRANCH_ID, "");
+
+
+        user_dob = preferenceHelper.LoadStringPref(AppConfig.PREF_USER_DOB, "");
+        user_city = preferenceHelper.LoadStringPref(AppConfig.PREF_USER_CITY, "");
+        user_state = preferenceHelper.LoadStringPref(AppConfig.PREF_USER_STATE, "");
+        st_zip = preferenceHelper.LoadStringPref(AppConfig.PREF_USER_ZIPCODE, "");
+        st_landline = preferenceHelper.LoadStringPref(AppConfig.PREF_USER_LANDLINE, "");
+        st_findus_word = preferenceHelper.LoadStringPref(AppConfig.PREF_USER_ST_FINDUS_WORD, "");
+        st_address2 = preferenceHelper.LoadStringPref(AppConfig.PREF_USER_ADDRESS1, "");
+        st_lastname = preferenceHelper.LoadStringPref(AppConfig.PREF_USER_LASTNAME, "");
+        st_findustitle = preferenceHelper.LoadStringPref(AppConfig.PREF_USER_FINDUS_TITLE, "");
+
 
         btnSubmitAliment.setOnClickListener(this);
 
@@ -249,7 +264,7 @@ public class Ailments_Activity extends AppCompatActivity implements View.OnClick
 
 
         switch (item.getItemId()) {
-            case R.id.home:
+            case android.R.id.home:
 
                 Intent intent = new Intent(Ailments_Activity.this, NewMemberActivity.class);
                 startActivity(intent);
@@ -282,26 +297,29 @@ public class Ailments_Activity extends AppCompatActivity implements View.OnClick
             Toast.makeText(Ailments_Activity.this, "Please Select One Ailment On List", Toast.LENGTH_SHORT).show();
         } else {
 
-            customer_detail_call(user_fname, user_phone, user_gender, user_email, user_adddress, txtHide.getText().toString());
+            customer_detail_call(user_fname, user_phone, user_gender, user_email, user_adddress, txtHide.getText().toString(), barnch_id);
 
         }
 
 
     }
 
-    private void customer_detail_call(String user_fname, String user_phone, String user_gender, String user_email, String user_adddress, String user_ailment_key) {
+    private void customer_detail_call(String user_fname, String user_phone, String user_gender, String user_email, String user_adddress, String user_ailment_key, String barnch_id) {
 
         myApplication.DialogMessage("Loading...");
         myApplication.showDialog();
 
+
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<RegisterResponse> responseCall = apiInterface.REGISTER_RESPONSE_CALL("1", user_fname, user_gender, user_adddress, user_phone, user_email, user_ailment_key);
+        Call<RegisterResponse> responseCall = apiInterface.REGISTER_RESPONSE_CALL(barnch_id,
+                user_fname, user_gender, user_adddress, user_phone, user_email, user_ailment_key,
+                st_lastname, user_dob, st_address2, user_city, user_state, st_zip, st_findustitle, "", st_findus_word, st_landline);
 
         responseCall.enqueue(new Callback<RegisterResponse>() {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
 
-                ApiClient.showLog("code",""+response.code());
+                ApiClient.showLog("code", "" + response.code());
 
                 if (response.code() == 200) {
 

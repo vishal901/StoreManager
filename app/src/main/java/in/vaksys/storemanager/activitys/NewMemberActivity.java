@@ -3,7 +3,6 @@ package in.vaksys.storemanager.activitys;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -77,10 +77,12 @@ public class NewMemberActivity extends AppCompatActivity implements View.OnClick
     Spinner spCity;
     @Bind(R.id.sp_state)
     Spinner spState;
+    @Bind(R.id.edt_address1_user)
+    EditText edtAddress1User;
 
     private String malefemale = "MALE";
-
-    private String user_fname, user_gender, user_adddress, user_phone, user_email;
+    private String st_zip = "";
+    private String st_landline = "";
 
 
     private ArrayList<String> day, month, year, state, city;
@@ -88,6 +90,12 @@ public class NewMemberActivity extends AppCompatActivity implements View.OnClick
 
     private MyApplication myApplication;
     Handler handler;
+
+    private String st_day, st_month, st_yr, st_city, st_state, user_dob, user_city, user_state, user_fname, user_gender, user_adddress, user_phone, user_email, st_dob;
+    private String st_findus_word = "";
+    private String st_address2 = "";
+    private String st_lastname = "";
+    private String st_findustitle = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,21 +178,87 @@ public class NewMemberActivity extends AppCompatActivity implements View.OnClick
         // attaching data adapter to spinner
         spDay.setAdapter(spinnerTextAdapterday);
 
+
+        spDay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                st_day = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         SpinnerTextAdapterstatic spinnerTextAdaptermonth = new SpinnerTextAdapterstatic(NewMemberActivity.this, month);
         // attaching data adapter to spinner
         spMonth.setAdapter(spinnerTextAdaptermonth);
+
+        spMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                st_month = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         SpinnerTextAdapterstatic spinnerTextAdapteryr = new SpinnerTextAdapterstatic(NewMemberActivity.this, year);
         // attaching data adapter to spinner
         spYear.setAdapter(spinnerTextAdapteryr);
 
+        spYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                st_yr = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         SpinnerTextAdapterstatic spinnerTextAdaptercity = new SpinnerTextAdapterstatic(NewMemberActivity.this, city);
         // attaching data adapter to spinner
         spCity.setAdapter(spinnerTextAdaptercity);
 
+        spCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                st_city = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         SpinnerTextAdapterstatic spinnerTextAdapterstate = new SpinnerTextAdapterstatic(NewMemberActivity.this, state);
         // attaching data adapter to spinner
         spState.setAdapter(spinnerTextAdapterstate);
+
+        spState.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                st_state = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
     }
@@ -233,6 +307,8 @@ public class NewMemberActivity extends AppCompatActivity implements View.OnClick
                                     FindAs.DataBean aa = response.body().getData().get(position);
 
 //                                    ApiClient.showLog("titel",title);
+
+                                    st_findustitle = aa.getTitle();
 
                                     if (aa.getTitle().equalsIgnoreCase("Other")) {
 
@@ -296,6 +372,46 @@ public class NewMemberActivity extends AppCompatActivity implements View.OnClick
             return;
         }
 
+//-----------select date of barth--------------------------
+
+        st_dob = st_yr + "-" + st_day + "-" + st_month;
+        if (st_dob.equalsIgnoreCase("1910-1-1")) {
+
+            user_dob = "";
+        } else {
+
+            user_dob = st_dob;
+        }
+//----------------------------------------------------------------------
+
+        if (st_city.equalsIgnoreCase("Select City")) {
+
+            user_city = "";
+
+        } else {
+            user_city = st_city;
+        }
+
+//------------------------------------------------------------------------
+        if (st_state.equalsIgnoreCase("Select State")) {
+
+            user_state = "";
+
+        } else {
+            user_state = st_state;
+        }
+
+//-------------------------------------------------------------------------
+
+        st_zip = edtZipcode.getText().toString();
+        st_landline = edtLandlineUser.getText().toString();
+        st_findus_word = edtOtherWriteUser.getText().toString();
+        st_address2 = edtAddress1User.getText().toString();
+        st_lastname = edtLastNameUser.getText().toString();
+
+
+        ApiClient.showLog("all data", user_dob + "\n" + user_city + "\n" + user_state + "\n" + st_zip + "\n" + st_landline + "\n" + st_findus_word + "\n" + st_address2+"\n"+st_lastname);
+
 
         user_fname = edtFirstNameUser.getText().toString();
         user_adddress = edtAddressUser.getText().toString();
@@ -310,6 +426,20 @@ public class NewMemberActivity extends AppCompatActivity implements View.OnClick
         preferenceHelper.SaveStringPref(AppConfig.PREF_USER_GENDER, malefemale);
         preferenceHelper.SaveStringPref(AppConfig.PREF_USER_PHONE, user_phone);
         preferenceHelper.SaveStringPref(AppConfig.PREF_USER_EMAIL, user_email);
+
+//        other add
+        preferenceHelper.SaveStringPref(AppConfig.PREF_USER_DOB, user_dob);
+        preferenceHelper.SaveStringPref(AppConfig.PREF_USER_CITY, user_city);
+        preferenceHelper.SaveStringPref(AppConfig.PREF_USER_STATE, user_state);
+        preferenceHelper.SaveStringPref(AppConfig.PREF_USER_ZIPCODE, st_zip);
+        preferenceHelper.SaveStringPref(AppConfig.PREF_USER_LANDLINE, st_landline);
+
+        preferenceHelper.SaveStringPref(AppConfig.PREF_USER_ST_FINDUS_WORD, st_findus_word);
+        preferenceHelper.SaveStringPref(AppConfig.PREF_USER_ADDRESS1, st_address2);
+        preferenceHelper.SaveStringPref(AppConfig.PREF_USER_LASTNAME, st_lastname);
+        preferenceHelper.SaveStringPref(AppConfig.PREF_USER_FINDUS_TITLE, st_findustitle);
+
+
         preferenceHelper.ApplyPref();
 
         Intent i = new Intent(NewMemberActivity.this, Ailments_Activity.class);
@@ -377,4 +507,18 @@ public class NewMemberActivity extends AppCompatActivity implements View.OnClick
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
     }
+
+//    @Override
+//    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//
+//        st_day = ((TextView) view.findViewById(R.id.spin_text)).getText().toString();
+//
+//        ApiClient.showLog("name",st_day);
+//
+//    }
+//
+//    @Override
+//    public void onNothingSelected(AdapterView<?> parent) {
+//
+//    }
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/btn_ractangle_border1"
+    android:layout_marginBottom="5dp"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
+        android:layout_height="wrap_content"
+        android:text="Branch Name"
+        android:id="@+id/textView2" />
+
+    <View
+        android:id="@+id/viewshoe"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/textView2"
+        android:background="#ccc"
+        android:layout_height="1dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rec_get_branch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_submit_aliment"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/viewshoe">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/pb_branch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

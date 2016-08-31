@@ -36,7 +36,9 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/btn_ractangle_border"
                     android:hint="@string/fname"
+                    android:inputType="text"
                     android:lines="1"
+                    android:singleLine="true"
                     android:maxLines="1"
                     android:paddingLeft="15dp"
                     android:textSize="12sp" />
@@ -45,11 +47,13 @@
                     android:id="@+id/edt_lname_user"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:singleLine="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/btn_ractangle_border"
                     android:hint="@string/lname"
+                    android:inputType="text"
                     android:lines="1"
                     android:maxLines="1"
                     android:paddingLeft="15dp"
@@ -61,12 +65,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="10dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_gravity="bottom"
                         android:layout_weight="0"
                         android:padding="3dp"
                         android:text="Date of Birth"
@@ -206,6 +210,7 @@
                     android:textSize="12sp" />
 
                 <EditText
+                    android:id="@+id/edt_address1_user"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
@@ -222,14 +227,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginRight="3dp"
+                        android:layout_weight="1"
                         android:background="@drawable/border_small"
                         android:gravity="center"
                         android:orientation="vertical">
@@ -247,8 +252,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginLeft="3dp"
+                        android:layout_weight="1"
                         android:background="@drawable/border_small"
                         android:gravity="center"
                         android:orientation="vertical">
@@ -277,6 +282,7 @@
                     android:hint="Zip Code"
                     android:inputType="phone"
                     android:lines="1"
+                    android:maxLength="6"
                     android:maxLines="1"
                     android:paddingLeft="15dp"
                     android:paddingTop="5dp"
@@ -297,6 +303,7 @@
                         android:background="@drawable/border_small"
                         android:digits="0123456789"
                         android:gravity="center"
+                        android:maxLength="14"
                         android:hint="Mobile"
                         android:inputType="number"
                         android:lines="1"
@@ -312,6 +319,7 @@
                         android:layout_height="40dp"
                         android:layout_marginLeft="3dp"
                         android:layout_weight="1"
+                        android:maxLength="14"
                         android:background="@drawable/border_small"
                         android:digits="0123456789"
                         android:gravity="center"
@@ -407,7 +415,6 @@
                         android:id="@+id/sp_source"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-
                         />
 
 
